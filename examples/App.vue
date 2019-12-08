@@ -1,6 +1,7 @@
 <template>
   <div>
-    <draglist :list=list></draglist>
+    <draglist :list=list>
+    </draglist>
   </div>
 </template>
 
@@ -11,6 +12,8 @@ export default {
     return {
       list: ['1', '2', '3']
     }
+  },
+  methods: {
   }
 }
 </script>
