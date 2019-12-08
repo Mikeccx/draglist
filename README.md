@@ -21,4 +21,8 @@ npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [Configuration Reference](https://cli.vuejs.org/config/)
+
+# 前言
+  此公共组件基于vue，是一个可拖拽排序列表(长按)。
+
