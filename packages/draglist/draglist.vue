@@ -4,10 +4,25 @@
     <ul>
       <li v-for="(item, index) in list"
       :key='index'
+      class="draglist-li"
       @touchstart.stop="touchstart($event, index)"
       @touchend.stop="touchend($event, index)"
-      @touchmove.stop="touchmove($event, index)">
-      {{item}}
+      >
+      <div class="draglist-li-warper">
+        <div>
+        <svg class="icon"
+           aria-hidden="true">
+        <use xlink:href="#icon-delete-s"></use>
+        </svg>
+        </div>
+
+        <div @touchmove="touchmove($event, index)">
+        <svg class="icon"
+           aria-hidden="true">
+        <use xlink:href="#icon-tuozhuaicaidandaohang"></use>
+        </svg>
+        </div>
+      </div>
       </li>
     </ul>
   </div>
@@ -23,21 +38,14 @@ export default {
     return {
       vueTouches: '', // 记录最开始点击的坐标
       height: '', // 每个列表高度
-      longtapTime: null, // 长按定时器
-      islongtap: false, // 是否是长按状态
       target: '', // 当前控制的元素
       tmph: 0
     }
   },
   methods: {
     // 长按事件
-    longtap () {
-      this.islongtap = true
-    },
     touchstart (e, index) {
-      var that = this
       // 添加点击效果
-      e.currentTarget.classList.add('item-active')
       // 记录每列高度
       this.height = e.currentTarget.clientHeight
       // console.log(index)
@@ -48,21 +56,20 @@ export default {
       }
       // 记录当前操作元素
       this.target = e.currentTarget
-      this.longtapTime = setTimeout(function () { that.longtap() }, 350)
     },
     touchmove (e, index) {
+      console.log('e', e.currentTarget)
       // 记录移动的x,y轴距离
       let x = e.changedTouches[0].pageX - this.vueTouches.x
       let y = e.changedTouches[0].pageY - this.vueTouches.y
       // 操作dom
       let li = document.getElementsByTagName('li')
       let h = this.height // 移动一格的距离
-      e.currentTarget.classList.add('item-active')
       // 长按状态下和已添加区域才能移动
-      if (this.islongtap && e.cancelable) {
+      if (e.cancelable) {
         e.preventDefault()
         // 列表随着手势移动
-        e.currentTarget.style = `transform:translate( ${x}px,${y}px);`
+        li[index].style = `transform:translate( ${x}px,${y}px);`
         if (Math.abs(y) > 0) {
           // 首尾特殊情况
           if ((index === 0 && y < 0) || (index === this.list.length && y > 0)) {
@@ -94,30 +101,21 @@ export default {
           }
         }
       } else if (Math.abs(x) > 5 || Math.abs(y) > 5) {
-        this.islongtap = false
-        clearTimeout(this.longtapTime)
       }
     },
     touchend (e, index) {
       this.tmph = 0
       // console.log('touchend', e.defaultPrevented)
       // 移出点击移动效果
-      e.currentTarget.classList.remove('item-active')
       // e.currentTarget.classList.remove('item-longtap')
       let li = document.getElementsByTagName('li')
       // 移除长按事件
-      clearTimeout(this.longtapTime)
       // 通过改变数组改变其真正定位
-      if (this.islongtap && (this.step !== 0)) {
+      if ((this.step !== 0)) {
         // console.log('longtap')
         let tem = this.list.splice(index, 1)
         this.list.splice(index + this.step, 0, tem[0])
-        this.islongtap = false
-      } else if (!this.islongtap) {
-        console.log(this.islongtap)
       }
-      // 重置长按事件
-      this.islongtap = false
       // 修正move时暂时的位移
       for (let i = 0; i < this.list.length; i++) {
         li[i].style = `transform:translate( 0px,0px);`
@@ -135,6 +133,21 @@ export default {
 }
 .draglist-warper li{
   border-radius: 5px;
+}
+.draglist-li {
+  box-sizing: content-box;
+}
+.draglist-li-warper{
+  margin: 0 20px;
+  border-bottom: 1px #cccccc solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.draglist-li-warper div{
+  height: 40px;
+  display: flex;
+  align-items: center;
 }
 .item-active{
   background: #cccccc
