@@ -43,12 +43,9 @@ export default {
     }
   },
   methods: {
-    // 长按事件
     touchstart (e, index) {
-      // 添加点击效果
       // 记录每列高度
       this.height = e.currentTarget.clientHeight
-      // console.log(index)
       // 记录初始点击坐标
       this.vueTouches = {
         x: e.changedTouches[0].pageX,
@@ -65,7 +62,6 @@ export default {
       // 操作dom
       let li = document.getElementsByTagName('li')
       let h = this.height // 移动一格的距离
-      // 长按状态下和已添加区域才能移动
       if (e.cancelable) {
         e.preventDefault()
         // 列表随着手势移动
@@ -89,8 +85,6 @@ export default {
           // 向上的情况
           if (y < 0) {
             this.step = Math.floor(y / this.height + 0.5)
-            // console.log(y / this.height)
-            // console.log(this.step)
             for (let i = index - 1; i >= 0; i--) {
               if (i < index + this.step) {
                 li[i].style = `transform:translate( 0px,0px);transition:0.3s;`
@@ -105,11 +99,7 @@ export default {
     },
     touchend (e, index) {
       this.tmph = 0
-      // console.log('touchend', e.defaultPrevented)
-      // 移出点击移动效果
-      // e.currentTarget.classList.remove('item-longtap')
       let li = document.getElementsByTagName('li')
-      // 移除长按事件
       // 通过改变数组改变其真正定位
       if ((this.step !== 0)) {
         // console.log('longtap')
