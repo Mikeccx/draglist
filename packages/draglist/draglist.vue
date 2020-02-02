@@ -10,7 +10,7 @@
       >
       <div class="draglist-li-warper">
         <div>
-        <svg class="icon"
+        <svg class="icon" @click="delList(index)"
            aria-hidden="true">
         <use xlink:href="#icon-delete-s"></use>
         </svg>
@@ -42,6 +42,9 @@ export default {
     }
   },
   methods: {
+    delList (index) {
+      this.list.splice(index, 1)
+    },
     touchstart (e, index) {
       // 记录每列高度
       this.height = e.currentTarget.clientHeight
@@ -54,7 +57,6 @@ export default {
       this.target = e.currentTarget
     },
     touchmove (e, index) {
-      console.log('e', e.currentTarget)
       // 记录移动的x,y轴距离
       let x = e.changedTouches[0].pageX - this.vueTouches.x
       let y = e.changedTouches[0].pageY - this.vueTouches.y

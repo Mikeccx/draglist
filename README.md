@@ -24,5 +24,6 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/)
 
 # 前言
-  此公共组件基于vue，是一个可拖拽排序列表(长按)。
+  此公共组件基于vue，模仿苹果music播放列表编辑模式下的一个可拖拽排序列表。
+![demo](https://github.com/Mikeccx/draglist/tree/master/packages/displayImg/demo.gif)
 
