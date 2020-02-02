@@ -38,8 +38,7 @@ export default {
     return {
       vueTouches: '', // 记录最开始点击的坐标
       height: '', // 每个列表高度
-      target: '', // 当前控制的元素
-      tmph: 0
+      target: '' // 当前控制的元素
     }
   },
   methods: {
@@ -98,7 +97,6 @@ export default {
       }
     },
     touchend (e, index) {
-      this.tmph = 0
       let li = document.getElementsByTagName('li')
       // 通过改变数组改变其真正定位
       if ((this.step !== 0)) {
