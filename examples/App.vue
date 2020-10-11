@@ -1,6 +1,6 @@
 <template>
   <div>
-    <draglist :list=list>
+    <draglist :list="list" :swing="true">
     </draglist>
   </div>
 </template>

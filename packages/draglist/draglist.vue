@@ -32,6 +32,10 @@ export default {
   name: 'draglist',
   props: {
     list: {
+    },
+    swing: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -66,7 +70,7 @@ export default {
       if (e.cancelable) {
         e.preventDefault()
         // 列表随着手势移动
-        li[index].style = `transform:translate( ${x}px,${y}px);`
+        li[index].style = this.swing ? `transform:translate( ${x}px,${y}px);` : `transform:translate( 0px,${y}px);`
         if (Math.abs(y) > 0) {
           // 首尾特殊情况
           if ((index === 0 && y < 0) || (index === this.list.length && y > 0)) {
